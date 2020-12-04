@@ -17,40 +17,12 @@ use App\Tag;
 |
 */
 
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// get all the tags of a specific post
-Route::get('/posts/{id}/tags', function($id) {
-    $post_tags = Post::find($id);
-     
-    foreach($post_tags->tags as $tag) {
-        echo $tag->name . '<br>';
-    }
-});
-
-// get all the tags of a specific video
-Route::get('/videos/{id}/tags', function($id) {
-    $video_tags = Video::find($id);
-
-    foreach($video_tags->tags as $tag) {
-        echo $tag->name . '<br>';
-    }
-});
-
-Route::get('/tag/{id}/post', function($id) {
-    $tag_post = Tag::find($id);
-    
-    foreach($tag_post->posts as $post) {
-        echo $post->title . '<br>';
-    }
-});
-
-Route::get('/tag/{id}/videos', function($id) {
-    $tag_video = Tag::find($id);
-    
-    foreach($tag_video->videos as $video) {
-        echo $video->name . '<br>';
-    }
-});
+Route::resource('/posts', 'PostController');

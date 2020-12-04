@@ -24,22 +24,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // name of the model
-    public function post() {
-        // this will automatically find the user_id foreign key from post table by default
-        return $this->hasOne('App\Post');
-    }
-
     // make it plural posts
     public function posts() {
         return $this->hasMany('App\Post');
     }
 
-    public function roles() {
-        return $this->belongsToMany('App\Role');
-    }
-
-    public function photos() {
-        return $this->morphMany('App\Photo', 'imageable');
-    }
 }
