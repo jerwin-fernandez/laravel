@@ -56,7 +56,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $post = Post::findOrFail($id);
+
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
@@ -67,7 +70,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -79,7 +84,11 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $post->update(['title' => $request->title]);
+
+        return redirect('/posts');
     }
 
     /**
@@ -90,21 +99,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect('/posts');
     }
 
-    public function contact() {
-        
-        $people = ['Jerwin', 'Calyn'];
-
-        return view('contact', [
-            'people' => $people
-        ]);
-    }
-
-    public function show_post($id) {
-        return view('post', [
-            'id' => $id
-        ]);
-    }
 }
