@@ -4,18 +4,41 @@
 
   <p>Edit a post</p>
 
-  <form action="/posts/{{ $post->id }}" method="post">
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
-    <input type="text" name="title" value="{{ $post->title }}" placeholder="Enter title" />
-    <input type="submit" name="submit" />
-  </form>
+  @if(count($errors) > 0)
+  <div class="alert alert-danger">
+      <ul>
+          @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+      </ul>
+  </div>
+  @endif
+
+  {!! Form::model($post, [
+    'route' => ['posts.update', $post],
+    'method' => 'PUT'
+  ]) !!}
+
+    <div class="form-group">
+      {!! Form::label('title', 'Title:') !!}
+      {!! Form::text('title', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Enter a title',
+      ]) !!}
+    </div>
+
+    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+
+  {!! Form::close() !!}
 
   <a href="{{ route('posts.show', $post->id) }}">Go back</a>
 
-  <form action="/posts/{{ $post->id }}" method="post">
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" name="delete" value="Delete" />
-  </form>
+  {!! Form::open([
+    'route' => ['posts.destroy', $post->id],
+    'method' => 'DELETE'
+  ]) !!}
+
+    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+
+  {!! Form::close() !!}
 @endsection

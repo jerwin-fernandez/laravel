@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Requests\CreatePostRequest;
+
 use App\Post;
+
 use App\User;
 
 class PostController extends Controller
@@ -18,9 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-
-        // get all post
-        $posts = Post::all();
+        $posts = Post::LatestDesc();
 
         return view('posts.index', ['posts' => $posts]);
     }
@@ -41,7 +42,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         Post::create(['title' => $request->title]);
 
@@ -82,7 +83,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreatePostRequest $request, $id)
     {
         $post = Post::findOrFail($id);
 

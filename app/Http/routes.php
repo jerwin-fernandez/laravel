@@ -5,6 +5,7 @@ use App\Country;
 use App\Photo;
 use App\Video;
 use App\Tag;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::resource('/posts', 'PostController');
+
+Route::get('/getname', function() {
+
+    $user = User::find(1);
+
+    echo $user->name;
+
+});
+
+Route::get('/savename', function() {
+
+    $user = User::find(1);
+
+    $user->name = 'jerwin fernandez';
+
+    $user->save();
+
+});

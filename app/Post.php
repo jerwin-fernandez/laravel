@@ -20,4 +20,8 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function scopeLatestDesc($query) {
+        return $query->orderBy('id', 'desc')->get();
+    }
+
 }
